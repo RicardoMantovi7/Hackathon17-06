@@ -4,7 +4,14 @@ $vaga = [
     "empresa" => "Tech Solutions",
     "local" => "Umuarama - PR",
     "bolsa" => "R$ 1.200,00",
-    "descricao" => "Auxiliar no desenvolvimento e manutenção de sistemas web utilizando tecnologias modernas."
+    "descricao" => "Auxiliar no desenvolvimento e manutenção de sistemas web, participando da criação de novas funcionalidades e correção de bugs.",
+    "requisitos" => [
+        "Conhecimento básico em HTML",
+        "Conhecimento básico em CSS",
+        "Conhecimento básico em JavaScript",
+        "Boa comunicação",
+        "Vontade de aprender"
+    ]
 ];
 ?>
 
@@ -22,23 +29,43 @@ $vaga = [
     <h1>Portal de Estágios UniALFA</h1>
 </header>
 
-<main class="container">
+<div class="container">
 
     <div class="card">
+
+        <span class="badge">Vaga Disponível</span>
+
         <h2><?= $vaga['titulo']; ?></h2>
 
         <p><strong>Empresa:</strong> <?= $vaga['empresa']; ?></p>
         <p><strong>Local:</strong> <?= $vaga['local']; ?></p>
         <p><strong>Bolsa:</strong> <?= $vaga['bolsa']; ?></p>
 
-        <h3>Descrição</h3>
-        <p><?= $vaga['descricao']; ?></p>
+        <br>
+
+        <h3>Descrição da Vaga</h3>
+
+        <p>
+            <?= $vaga['descricao']; ?>
+        </p>
 
         <br>
 
-        <a href="candidatura.php">
-            <button>Candidatar-se</button>
+        <h3>Requisitos</h3>
+
+        <ul>
+            <?php foreach($vaga['requisitos'] as $requisito): ?>
+                <li><?= $requisito ?></li>
+            <?php endforeach; ?>
+        </ul>
+
+        <a href="candidatura.php" class="btn">
+            Candidatar-se
         </a>
+
     </div>
 
-</
+</div>
+
+</body>
+</html>

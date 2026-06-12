@@ -38,16 +38,20 @@ $vagas = [
 <main class="container">
     <h2>Vagas Disponíveis</h2>
 
-    <?php foreach ($vagas as $vaga): ?>
-        <div class="card">
-            <h3><?= $vaga['titulo']; ?></h3>
-            <p><strong>Empresa:</strong> <?= $vaga['empresa']; ?></p>
-            <p><strong>Local:</strong> <?= $vaga['local']; ?></p>
-            <p><strong>Bolsa:</strong> <?= $vaga['bolsa']; ?></p>
+  <?php foreach ($vagas as $vaga): ?>
+    <div class="card">
+        <h3><?= $vaga['titulo']; ?></h3>
 
-            <button>Candidatar-se</button>
-        </div>
-    <?php endforeach; ?>
+        <p><strong>Empresa:</strong> <?= $vaga['empresa']; ?></p>
+        <p><strong>Local:</strong> <?= $vaga['local']; ?></p>
+        <p><strong>Bolsa:</strong> <?= $vaga['bolsa']; ?></p>
+
+        <a class="btn" href="vaga.php">
+            Ver Detalhes
+        </a>
+    </div>
+<?php endforeach; ?>
+
 
 </main>
 
