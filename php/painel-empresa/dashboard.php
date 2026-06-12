@@ -11,7 +11,11 @@
 <header>
     <h1>Painel da Empresa - UniALFA</h1>
 </header>
-
+<nav class="navbar">
+    <a href="dashboard.php">Dashboard</a>
+    <a href="vagas.php">Minhas Vagas</a>
+    <a href="criar-vaga.php">Nova Vaga</a>
+</nav>
 <div class="container">
 
     <div class="card">

@@ -28,7 +28,10 @@ $candidaturas = [
 <header>
     <h1>Portal de Estágios UniALFA</h1>
 </header>
-
+<nav class="navbar">
+    <a href="vagas.php">Vagas</a>
+    <a href="minhas-candidaturas.php">Minhas Candidaturas</a>
+</nav>
 <div class="container">
 
     <h2 style="margin-bottom:20px;">
