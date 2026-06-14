@@ -1,104 +1,202 @@
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+/* ── Reset ─────────────────────────────────────── */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* ── Variáveis UniALFA ─────────────────────────── */
+:root {
+    --azul:        #003366;
+    --azul-medio:  #004b99;
+    --azul-claro:  #e8f0fb;
+    --dourado:     #f4b400;
+    --dourado-esc: #d4a000;
+    --cinza-fundo: #f5f7fa;
+    --cinza-borda: #dde3ec;
+    --texto:       #2c2c2c;
+    --texto-suave: #6b7280;
+    --branco:      #ffffff;
+    --sucesso:     #166534;
+    --sucesso-bg:  #dcfce7;
+    --erro:        #991b1b;
+    --erro-bg:     #fee2e2;
+    --pendente-bg: #fef9c3;
+    --pendente:    #854d0e;
+    --fonte:       'Segoe UI', Arial, sans-serif;
 }
 
-body{
-    font-family:'Segoe UI',sans-serif;
-    background:#f5f7fa;
-    color:#333;
+body {
+    font-family: var(--fonte);
+    background:  var(--cinza-fundo);
+    color:       var(--texto);
+    min-height:  100vh;
+    display:     flex;
+    flex-direction: column;
 }
 
-header{
-    background:#003366;
-    color:white;
-    padding:20px 40px;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    box-shadow:0 2px 8px rgba(0,0,0,.15);
+/* ── Header ────────────────────────────────────── */
+header {
+    background: var(--azul);
+    color: var(--branco);
+    padding: 0 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 70px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.2);
 }
 
-header h1{
-    font-size:28px;
+.header-logo {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    text-decoration: none;
 }
 
-.container{
-    width:90%;
-    max-width:1200px;
-    margin:30px auto;
+.header-logo .logo-badge {
+    background: var(--dourado);
+    color: var(--azul);
+    font-weight: 900;
+    font-size: 18px;
+    width: 42px;
+    height: 42px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.card{
-    background:white;
-    border-radius:12px;
-    padding:25px;
-    margin-bottom:20px;
-    box-shadow:0 4px 12px rgba(0,0,0,.08);
+.header-logo span {
+    color: var(--branco);
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 1.3;
 }
 
-.card h2,
-.card h3{
-    color:#003366;
-    margin-bottom:15px;
+.header-logo small {
+    display: block;
+    font-size: 11px;
+    font-weight: 400;
+    color: #93c5fd;
 }
 
-.card p{
-    margin-bottom:10px;
-    line-height:1.6;
+.header-nav a {
+    color: #93c5fd;
+    text-decoration: none;
+    font-size: 14px;
+    margin-left: 20px;
+    transition: color .2s;
 }
 
-ul{
-    margin-left:20px;
-    margin-bottom:20px;
+.header-nav a:hover { color: var(--dourado); }
+
+/* ── Navbar ────────────────────────────────────── */
+.navbar {
+    background: var(--azul-medio);
+    padding: 0 40px;
+    display: flex;
+    gap: 4px;
 }
 
-li{
-    margin-bottom:8px;
+.navbar a {
+    color: #bfdbfe;
+    text-decoration: none;
+    padding: 12px 18px;
+    font-size: 14px;
+    font-weight: 500;
+    border-bottom: 3px solid transparent;
+    transition: all .2s;
+    display: inline-block;
 }
 
-.btn{
-    display:inline-block;
-    background:#003366;
-    color:white;
-    text-decoration:none;
-    padding:12px 20px;
-    border-radius:8px;
-    font-weight:600;
-    transition:0.3s;
+.navbar a:hover,
+.navbar a.ativo {
+    color: var(--branco);
+    border-bottom-color: var(--dourado);
 }
 
-.btn:hover{
-    background:#004b99;
+/* ── Container ─────────────────────────────────── */
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 32px auto;
+    flex: 1;
 }
 
-.badge{
-    display:inline-block;
-    background:#f4b400;
-    color:#003366;
-    padding:6px 12px;
-    border-radius:20px;
-    font-weight:bold;
-    margin-bottom:15px;
-}
-label{
-    display:block;
-    margin-top:15
-}
-.navbar{
-    background:#00264d;
-    padding:12px;
-    text-align:center;
+/* ── Cards ─────────────────────────────────────── */
+.card {
+    background: var(--branco);
+    border-radius: 12px;
+    padding: 28px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 12px rgba(0,0,0,.07);
+    border: 1px solid var(--cinza-borda);
 }
 
-.navbar a{
-    color:white;
-    text-decoration:none;
-    margin:0 15px;
-    font-weight:600;
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 14px;
 }
 
-.navbar a:hover{
-    color:#f4b400;
+.card h2, .card h3 {
+    color: var(--azul);
+    margin-bottom: 10px;
 }
+
+.card p {
+    color: var(--texto-suave);
+    line-height: 1.6;
+    margin-bottom: 8px;
+}
+
+ul {
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+
+li {
+    margin-bottom: 8px;
+}
+
+/* ── Grid de cards ─────────────────────────────── */
+.grid-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 20px;
+}
+
+/* ── Badges ────────────────────────────────────── */
+.badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.badge-area {
+    background: var(--azul-claro);
+    color: var(--azul);
+}
+
+.badge-sucesso  { background: var(--sucesso-bg);  color: var(--sucesso); }
+.badge-erro     { background: var(--erro-bg);     color: var(--erro); }
+.badge-pendente { background: var(--pendente-bg); color: var(--pendente); }
+
+/* ── Botões ────────────────────────────────────── */
+.btn {
+    display: inline-block;
+    background: var(--azul);
+    color: var(--branco);
+    text-decoration: none;
+    padding: 10px 22px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    transition: background .2s, transform .1s;
+}
+
+.btn:hover { background: var(--azul-medio); transform: translateY(-1px); }
+
+.btn-dourado {
