@@ -13,6 +13,7 @@ class ApiClient {
     }
 
     private function apiDisponivel(): bool {
+        if (!function_exists('curl_init')) return false;
         $ch = curl_init($this->baseUrl . '/vagas');
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_TIMEOUT, 2);
@@ -40,7 +41,6 @@ class ApiClient {
         unset($_SESSION['token'], $_SESSION['tipo'], $_SESSION['usuario']);
     }
 
-    // tipo: 'aluno' ou 'empresa'
     public function login(string $tipo, string $email, string $senha): array {
         if ($this->useMock) {
             $_SESSION['token']   = 'mock-token';
@@ -59,7 +59,6 @@ class ApiClient {
         return $result;
     }
 
-    // tipo: 'aluno' ou 'empresa'
     public function register(string $tipo, array $dados): array {
         if ($this->useMock) {
             return ['success' => true, 'data' => ['id' => rand(10,99)]];
@@ -67,7 +66,75 @@ class ApiClient {
         return $this->post("/auth/register/{$tipo}", $dados, false);
     }
 
-// ── Dados de exemplo enquanto a API não está rodando ─────────
+    // ── Requisições HTTP ─────────────────────────────────
+    private function headers(bool $auth = true): array {
+        $headers = ['Content-Type: application/json'];
+        if ($auth && !empty($_SESSION['token'])) {
+            $headers[] = 'Authorization: Bearer ' . $_SESSION['token'];
+        }
+        return $headers;
+    }
+
+    public function get(string $rota, bool $auth = true): array {
+        if ($this->useMock) return $this->getMock($rota);
+
+        $ch = curl_init($this->baseUrl . $rota);
+        curl_setopt_array($ch, [
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_TIMEOUT        => 10,
+            CURLOPT_HTTPHEADER     => $this->headers($auth),
+        ]);
+        $resp = curl_exec($ch);
+        curl_close($ch);
+        return json_decode($resp, true) ?? ['success' => false, 'data' => []];
+    }
+
+    public function post(string $rota, array $dados, bool $auth = true): array {
+        if ($this->useMock) return ['success' => true, 'data' => array_merge(['id' => rand(10,99)], $dados)];
+
+        $ch = curl_init($this->baseUrl . $rota);
+        curl_setopt_array($ch, [
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_POST           => true,
+            CURLOPT_POSTFIELDS     => json_encode($dados),
+            CURLOPT_HTTPHEADER     => $this->headers($auth),
+            CURLOPT_TIMEOUT        => 10,
+        ]);
+        $resp = curl_exec($ch);
+        curl_close($ch);
+        return json_decode($resp, true) ?? ['success' => false];
+    }
+
+    public function put(string $rota, array $dados, bool $auth = true): array {
+        if ($this->useMock) return ['success' => true, 'data' => $dados];
+
+        $ch = curl_init($this->baseUrl . $rota);
+        curl_setopt_array($ch, [
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_CUSTOMREQUEST  => 'PUT',
+            CURLOPT_POSTFIELDS     => json_encode($dados),
+            CURLOPT_HTTPHEADER     => $this->headers($auth),
+        ]);
+        $resp = curl_exec($ch);
+        curl_close($ch);
+        return json_decode($resp, true) ?? ['success' => false];
+    }
+
+    public function delete(string $rota, bool $auth = true): array {
+        if ($this->useMock) return ['success' => true];
+
+        $ch = curl_init($this->baseUrl . $rota);
+        curl_setopt_array($ch, [
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_CUSTOMREQUEST  => 'DELETE',
+            CURLOPT_HTTPHEADER     => $this->headers($auth),
+        ]);
+        $resp = curl_exec($ch);
+        curl_close($ch);
+        return json_decode($resp, true) ?? ['success' => false];
+    }
+
+    // ── Dados de exemplo enquanto a API não está rodando ─────────
     private function getMock(string $rota): array {
         if (str_starts_with($rota, '/vagas/empresa/minhas')) {
             return ['success' => true, 'data' => [
