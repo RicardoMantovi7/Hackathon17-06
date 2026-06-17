@@ -51,7 +51,7 @@ class Candidatura {
 
     public function getStatusBadge(): string {
         return match($this->status) {
-            'em_analise' => '<span class="badge badge-pendente">Em Análise</span>',
+            'em_analise' => '<span class="badge badge-alerta">Em Análise</span>',
             'aprovado'   => '<span class="badge badge-sucesso">Aprovado</span>',
             'reprovado'  => '<span class="badge badge-erro">Reprovado</span>',
             default      => '<span class="badge badge-pendente">Pendente</span>',

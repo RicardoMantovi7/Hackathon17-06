@@ -71,7 +71,7 @@ public class RelatorioUtil {
                             aluno.getRa(),
                             aluno.getNome(),
                             aluno.getEmail(),
-                            aluno.isApto() ? "SIM" : "NÃO"));
+                            aluno.isStatusAptidao() ? "SIM" : "NÃO"));
                 }
 
                 writer.write("\n=======================================\n");

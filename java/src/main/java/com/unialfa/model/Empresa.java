@@ -5,14 +5,18 @@ public class Empresa {
     private String nome;
     private String cnpj;
     private String email;
+    private String senha;
+    private String cidade;
     private String status;
 
     public Empresa() {}
 
-    public Empresa(String nome, String cnpj, String email, String status) {
+    public Empresa(String nome, String cnpj, String email, String senha, String cidade, String status) {
         this.nome = nome;
         this.cnpj = cnpj;
         this.email = email;
+        this.senha = senha;
+        this.cidade = cidade;
         this.status = status;
     }
 
@@ -48,6 +52,22 @@ public class Empresa {
         this.email = email;
     }
 
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
+    public String getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
+    }
+
     public String getStatus() {
         return status;
     }
@@ -62,6 +82,7 @@ public class Empresa {
                 ", nome='" + nome + '\'' +
                 ", cnpj='" + cnpj + '\'' +
                 ", email='" + email + '\'' +
+                ", cidade='" + cidade + '\'' +
                 ", status='" + status + '\'' +
                 '}';
     }

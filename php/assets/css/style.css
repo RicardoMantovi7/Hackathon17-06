@@ -19,6 +19,10 @@
     --erro-bg:     #fee2e2;
     --pendente-bg: #fef9c3;
     --pendente:    #854d0e;
+    --verde:       #166534; /* Alias para --sucesso */
+    --vermelho:    #991b1b; /* Alias para --erro */
+    --alerta-bg:   #fef3c7;
+    --alerta:      #92400e;
     --fonte:       'Segoe UI', Arial, sans-serif;
 }
 
@@ -181,6 +185,7 @@ li {
 .badge-sucesso  { background: var(--sucesso-bg);  color: var(--sucesso); }
 .badge-erro     { background: var(--erro-bg);     color: var(--erro); }
 .badge-pendente { background: var(--pendente-bg); color: var(--pendente); }
+.badge-alerta   { background: var(--alerta-bg);   color: var(--alerta); }
 
 /* ── Botões ────────────────────────────────────── */
 .btn {

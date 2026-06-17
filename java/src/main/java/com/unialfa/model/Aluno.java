@@ -3,14 +3,18 @@ package com.unialfa.model;
 public class Aluno extends Pessoa {
     private int id;
     private String ra;
-    private boolean apto;
+    private String senha;
+    private String curso;
+    private boolean statusAptidao;
 
     public Aluno() {}
 
-    public Aluno(String nome, String email, String ra, boolean apto) {
+    public Aluno(String nome, String email, String ra, String senha, String curso, boolean statusAptidao) {
         super(nome, email);
         this.ra = ra;
-        this.apto = apto;
+        this.senha = senha;
+        this.curso = curso;
+        this.statusAptidao = statusAptidao;
     }
 
     public int getId() {
@@ -29,12 +33,28 @@ public class Aluno extends Pessoa {
         this.ra = ra;
     }
 
-    public boolean isApto() {
-        return apto;
+    public String getSenha() {
+        return senha;
     }
 
-    public void setApto(boolean apto) {
-        this.apto = apto;
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
+    public String getCurso() {
+        return curso;
+    }
+
+    public void setCurso(String curso) {
+        this.curso = curso;
+    }
+
+    public boolean isStatusAptidao() {
+        return statusAptidao;
+    }
+
+    public void setStatusAptidao(boolean statusAptidao) {
+        this.statusAptidao = statusAptidao;
     }
 
     @Override
@@ -44,7 +64,8 @@ public class Aluno extends Pessoa {
                 ", ra='" + ra + '\'' +
                 ", nome='" + getNome() + '\'' +
                 ", email='" + getEmail() + '\'' +
-                ", apto=" + apto +
+                ", curso='" + curso + '\'' +
+                ", statusAptidao=" + statusAptidao +
                 '}';
     }
 }

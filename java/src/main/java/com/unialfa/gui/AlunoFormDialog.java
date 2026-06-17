@@ -22,7 +22,7 @@ public class AlunoFormDialog extends JDialog {
             txtRa.setText(aluno.getRa());
             txtNome.setText(aluno.getNome());
             txtEmail.setText(aluno.getEmail());
-            chkApto.setSelected(aluno.isApto());
+            chkApto.setSelected(aluno.isStatusAptidao());
         }
     }
 
@@ -77,7 +77,7 @@ public class AlunoFormDialog extends JDialog {
         aluno.setRa(txtRa.getText().trim());
         aluno.setNome(txtNome.getText().trim());
         aluno.setEmail(txtEmail.getText().trim());
-        aluno.setApto(chkApto.isSelected());
+        aluno.setStatusAptidao(chkApto.isSelected());
         salvo = true;
         dispose();
     }

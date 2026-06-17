@@ -1,7 +1,6 @@
 import { AppDataSource } from "../database/data-source";
 import { Candidatura, StatusCandidatura } from "../models/Candidatura";
 import { Vaga } from "../models/Vaga";
-import { Notificacao } from "../models/Notificacao";
 import AppError from "../utils/AppError";
 import z from "zod";
 import { AuthRequest } from "../middlewares/authMiddleware";
@@ -9,7 +8,6 @@ import { AuthRequest } from "../middlewares/authMiddleware";
 export class CandidaturaService {
   private candidaturaRepository = AppDataSource.getRepository(Candidatura);
   private vagaRepository = AppDataSource.getRepository(Vaga);
-  private notificacaoRepository = AppDataSource.getRepository(Notificacao);
 
   async create(vagaId: number, user: AuthRequest["user"]) {
     if (!user || user.tipo !== "aluno") {
@@ -97,14 +95,6 @@ export class CandidaturaService {
 
     candidatura.status = dados.status;
     await this.candidaturaRepository.save(candidatura);
-
-    const mensagem = `Sua candidatura à vaga foi ${dados.status}.`;
-    const notificacao = this.notificacaoRepository.create({
-      mensagem,
-      usuarioTipo: "aluno",
-      usuarioId: candidatura.alunoId,
-    });
-    await this.notificacaoRepository.save(notificacao);
 
     return candidatura;
   }

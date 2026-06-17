@@ -1,3 +1,16 @@
+<?php
+require_once __DIR__ . '/classes/ApiClient.php';
+$api = new ApiClient();
+
+// Busca as estatísticas da API
+$respEstatisticas = $api->get('/estatisticas', false);
+$estatisticas = $respEstatisticas['data'] ?? [
+    'totalVagas' => 0,
+    'totalEmpresas' => 0,
+    'totalCandidaturas' => 0,
+    'totalContratacoes' => 0
+];
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -34,17 +47,23 @@
 <div class="container">
     <div class="stats">
         <div class="stat-card">
-            <div class="stat-numero">3</div>
+            <div class="stat-numero"><?= htmlspecialchars($estatisticas['totalVagas']) ?></div>
             <div class="stat-label">Vagas Abertas</div>
         </div>
         <div class="stat-card">
-            <div class="stat-numero">2</div>
+            <div class="stat-numero"><?= htmlspecialchars($estatisticas['totalEmpresas']) ?></div>
             <div class="stat-label">Empresas Parceiras</div>
         </div>
         <div class="stat-card">
-            <div class="stat-numero">5</div>
+            <div class="stat-numero"><?= htmlspecialchars($estatisticas['totalCandidaturas']) ?></div>
             <div class="stat-label">Candidaturas</div>
         </div>
         <div class="stat-card">
-            <div class="stat-numero">1</div>
-            <div class="stat-label">Contratações</di
+            <div class="stat-numero"><?= htmlspecialchars($estatisticas['totalContratacoes']) ?></div>
+            <div class="stat-label">Contratações</div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

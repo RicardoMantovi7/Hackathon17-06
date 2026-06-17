@@ -11,13 +11,15 @@ public class AlunoDAO implements GenericDAO<Aluno> {
 
     @Override
     public void inserir(Aluno aluno) {
-        String sql = "INSERT INTO alunos (ra, nome, email, apto) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO alunos (ra, nome, email, senha, curso, status_aptidao) VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection conn = DatabaseUtil.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, aluno.getRa());
             stmt.setString(2, aluno.getNome());
             stmt.setString(3, aluno.getEmail());
-            stmt.setBoolean(4, aluno.isApto());
+            stmt.setString(4, aluno.getSenha());
+            stmt.setString(5, aluno.getCurso());
+            stmt.setBoolean(6, aluno.isStatusAptidao());
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -26,14 +28,16 @@ public class AlunoDAO implements GenericDAO<Aluno> {
 
     @Override
     public void atualizar(Aluno aluno) {
-        String sql = "UPDATE alunos SET ra=?, nome=?, email=?, apto=? WHERE id=?";
+        String sql = "UPDATE alunos SET ra=?, nome=?, email=?, senha=?, curso=?, status_aptidao=? WHERE id=?";
         try (Connection conn = DatabaseUtil.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, aluno.getRa());
             stmt.setString(2, aluno.getNome());
             stmt.setString(3, aluno.getEmail());
-            stmt.setBoolean(4, aluno.isApto());
-            stmt.setInt(5, aluno.getId());
+            stmt.setString(4, aluno.getSenha());
+            stmt.setString(5, aluno.getCurso());
+            stmt.setBoolean(6, aluno.isStatusAptidao());
+            stmt.setInt(7, aluno.getId());
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -65,7 +69,9 @@ public class AlunoDAO implements GenericDAO<Aluno> {
                 aluno.setRa(rs.getString("ra"));
                 aluno.setNome(rs.getString("nome"));
                 aluno.setEmail(rs.getString("email"));
-                aluno.setApto(rs.getBoolean("apto"));
+                aluno.setSenha(rs.getString("senha"));
+                aluno.setCurso(rs.getString("curso"));
+                aluno.setStatusAptidao(rs.getBoolean("status_aptidao"));
                 return aluno;
             }
         } catch (SQLException e) {
@@ -87,7 +93,9 @@ public class AlunoDAO implements GenericDAO<Aluno> {
                 aluno.setRa(rs.getString("ra"));
                 aluno.setNome(rs.getString("nome"));
                 aluno.setEmail(rs.getString("email"));
-                aluno.setApto(rs.getBoolean("apto"));
+                aluno.setSenha(rs.getString("senha"));
+                aluno.setCurso(rs.getString("curso"));
+                aluno.setStatusAptidao(rs.getBoolean("status_aptidao"));
                 lista.add(aluno);
             }
         } catch (SQLException e) {
@@ -111,7 +119,9 @@ public class AlunoDAO implements GenericDAO<Aluno> {
                 aluno.setRa(rs.getString("ra"));
                 aluno.setNome(rs.getString("nome"));
                 aluno.setEmail(rs.getString("email"));
-                aluno.setApto(rs.getBoolean("apto"));
+                aluno.setSenha(rs.getString("senha"));
+                aluno.setCurso(rs.getString("curso"));
+                aluno.setStatusAptidao(rs.getBoolean("status_aptidao"));
                 lista.add(aluno);
             }
         } catch (SQLException e) {

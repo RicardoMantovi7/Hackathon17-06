@@ -1,18 +1,29 @@
 <?php
-$vaga = [
-    "titulo" => "Estágio em Desenvolvimento Web",
-    "empresa" => "Tech Solutions",
-    "local" => "Umuarama - PR",
-    "bolsa" => "R$ 1.200,00",
-    "descricao" => "Auxiliar no desenvolvimento e manutenção de sistemas web, participando da criação de novas funcionalidades e correção de bugs.",
-    "requisitos" => [
-        "Conhecimento básico em HTML",
-        "Conhecimento básico em CSS",
-        "Conhecimento básico em JavaScript",
-        "Boa comunicação",
-        "Vontade de aprender"
-    ]
-];
+require_once __DIR__ . '/../classes/ApiClient.php';
+$api = new ApiClient();
+
+// Pega o ID da vaga do parâmetro GET
+$vagaId = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+
+if (!$vagaId) {
+    header('Location: vagas.php');
+    exit;
+}
+
+// Busca a vaga na API
+$result = $api->get("/vagas/{$vagaId}");
+$vaga = $result['data'] ?? null;
+
+if (!$vaga) {
+    header('Location: vagas.php');
+    exit;
+}
+
+// Processa os requisitos (se for uma string, divide em linhas)
+$requisitos = [];
+if (!empty($vaga['requisitos'])) {
+    $requisitos = array_filter(array_map('trim', explode("\n", $vaga['requisitos'])));
+}
 ?>
 
 <!DOCTYPE html>
@@ -26,43 +37,52 @@ $vaga = [
 <body>
 
 <header>
-    <h1>Portal de Estágios UniALFA</h1>
+    <a href="../index.php" class="header-logo">
+        <div class="logo-badge">α</div>
+        <span>Portal de Estágios<small>UniALFA — Umuarama</small></span>
+    </a>
+    <nav class="header-nav">
+        <a href="vagas.php">Vagas</a>
+        <a href="minhas-candidaturas.php">Minhas Candidaturas</a>
+    </nav>
 </header>
-<nav class="navbar">
-    <a href="vagas.php">Vagas</a>
-    <a href="minhas-candidaturas.php">Minhas Candidaturas</a>
-</nav>
+
 <div class="container">
 
     <div class="card">
 
-        <span class="badge">Vaga Disponível</span>
+        <span class="badge">Vaga <?= $vaga['status'] === 'aberta' ? 'Disponível' : 'Fechada' ?></span>
 
-        <h2><?= $vaga['titulo']; ?></h2>
+        <h2><?= htmlspecialchars($vaga['titulo'] ?? ''); ?></h2>
 
-        <p><strong>Empresa:</strong> <?= $vaga['empresa']; ?></p>
-        <p><strong>Local:</strong> <?= $vaga['local']; ?></p>
-        <p><strong>Bolsa:</strong> <?= $vaga['bolsa']; ?></p>
+        <p><strong>Empresa:</strong> <?= htmlspecialchars($vaga['empresa']['nome'] ?? ''); ?></p>
+        <?php if (!empty($vaga['empresa']['cidade'])): ?>
+            <p><strong>Local:</strong> <?= htmlspecialchars($vaga['empresa']['cidade'] ?? ''); ?></p>
+        <?php endif; ?>
+        <?php if (!empty($vaga['valorBolsa'])): ?>
+            <p><strong>Bolsa:</strong> R$ <?= number_format($vaga['valorBolsa'] ?? 0, 2, ',', '.'); ?></p>
+        <?php endif; ?>
 
         <br>
 
         <h3>Descrição da Vaga</h3>
 
         <p>
-            <?= $vaga['descricao']; ?>
+            <?= nl2br(htmlspecialchars($vaga['descricao'] ?? '')); ?>
         </p>
 
-        <br>
+        <?php if (!empty($requisitos)): ?>
+            <br>
+            <h3>Requisitos</h3>
 
-        <h3>Requisitos</h3>
+            <ul>
+                <?php foreach($requisitos as $requisito): ?>
+                    <li><?= htmlspecialchars($requisito) ?></li>
+                <?php endforeach; ?>
+            </ul>
+        <?php endif; ?>
 
-        <ul>
-            <?php foreach($vaga['requisitos'] as $requisito): ?>
-                <li><?= $requisito ?></li>
-            <?php endforeach; ?>
-        </ul>
-
-        <a href="candidatura.php" class="btn">
+        <a href="candidatura.php?vaga_id=<?= $vaga['id'] ?? 0; ?>" class="btn">
             Candidatar-se
         </a>
 

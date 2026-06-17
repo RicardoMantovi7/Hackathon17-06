@@ -11,14 +11,15 @@ public class VagaDAO implements GenericDAO<Vaga> {
 
     @Override
     public void inserir(Vaga vaga) {
-        String sql = "INSERT INTO vagas (empresa_id, titulo, descricao, status, data_criacao) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO vagas (empresa_id, titulo, descricao, requisitos, valor_bolsa, status) VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection conn = DatabaseUtil.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, vaga.getEmpresaId());
             stmt.setString(2, vaga.getTitulo());
             stmt.setString(3, vaga.getDescricao());
-            stmt.setString(4, vaga.getStatus());
-            stmt.setTimestamp(5, new Timestamp(vaga.getDataCriacao().getTime()));
+            stmt.setString(4, vaga.getRequisitos());
+            stmt.setDouble(5, vaga.getValorBolsa());
+            stmt.setString(6, vaga.getStatus());
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -27,14 +28,16 @@ public class VagaDAO implements GenericDAO<Vaga> {
 
     @Override
     public void atualizar(Vaga vaga) {
-        String sql = "UPDATE vagas SET empresa_id=?, titulo=?, descricao=?, status=? WHERE id=?";
+        String sql = "UPDATE vagas SET empresa_id=?, titulo=?, descricao=?, requisitos=?, valor_bolsa=?, status=? WHERE id=?";
         try (Connection conn = DatabaseUtil.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, vaga.getEmpresaId());
             stmt.setString(2, vaga.getTitulo());
             stmt.setString(3, vaga.getDescricao());
-            stmt.setString(4, vaga.getStatus());
-            stmt.setInt(5, vaga.getId());
+            stmt.setString(4, vaga.getRequisitos());
+            stmt.setDouble(5, vaga.getValorBolsa());
+            stmt.setString(6, vaga.getStatus());
+            stmt.setInt(7, vaga.getId());
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -68,8 +71,10 @@ public class VagaDAO implements GenericDAO<Vaga> {
                 vaga.setEmpresaId(rs.getInt("empresa_id"));
                 vaga.setTitulo(rs.getString("titulo"));
                 vaga.setDescricao(rs.getString("descricao"));
+                vaga.setRequisitos(rs.getString("requisitos"));
+                vaga.setValorBolsa(rs.getDouble("valor_bolsa"));
                 vaga.setStatus(rs.getString("status"));
-                vaga.setDataCriacao(rs.getTimestamp("data_criacao"));
+                vaga.setCreatedAt(rs.getTimestamp("created_at"));
                 vaga.setNomeEmpresa(rs.getString("nome_empresa"));
                 vaga.setNumeroCandidatos(rs.getInt("numero_candidatos"));
                 return vaga;
@@ -95,8 +100,10 @@ public class VagaDAO implements GenericDAO<Vaga> {
                 vaga.setEmpresaId(rs.getInt("empresa_id"));
                 vaga.setTitulo(rs.getString("titulo"));
                 vaga.setDescricao(rs.getString("descricao"));
+                vaga.setRequisitos(rs.getString("requisitos"));
+                vaga.setValorBolsa(rs.getDouble("valor_bolsa"));
                 vaga.setStatus(rs.getString("status"));
-                vaga.setDataCriacao(rs.getTimestamp("data_criacao"));
+                vaga.setCreatedAt(rs.getTimestamp("created_at"));
                 vaga.setNomeEmpresa(rs.getString("nome_empresa"));
                 vaga.setNumeroCandidatos(rs.getInt("numero_candidatos"));
                 lista.add(vaga);
@@ -125,8 +132,10 @@ public class VagaDAO implements GenericDAO<Vaga> {
                 vaga.setEmpresaId(rs.getInt("empresa_id"));
                 vaga.setTitulo(rs.getString("titulo"));
                 vaga.setDescricao(rs.getString("descricao"));
+                vaga.setRequisitos(rs.getString("requisitos"));
+                vaga.setValorBolsa(rs.getDouble("valor_bolsa"));
                 vaga.setStatus(rs.getString("status"));
-                vaga.setDataCriacao(rs.getTimestamp("data_criacao"));
+                vaga.setCreatedAt(rs.getTimestamp("created_at"));
                 vaga.setNomeEmpresa(rs.getString("nome_empresa"));
                 vaga.setNumeroCandidatos(rs.getInt("numero_candidatos"));
                 lista.add(vaga);

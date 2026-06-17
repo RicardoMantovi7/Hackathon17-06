@@ -39,7 +39,7 @@ public class EmpresaService {
     public void aprovar(int id) {
         Empresa emp = empresaDAO.buscarPorId(id);
         if (emp != null) {
-            emp.setStatus("ativa");
+            emp.setStatus("aprovado");
             empresaDAO.atualizar(emp);
         }
     }
@@ -47,7 +47,7 @@ public class EmpresaService {
     public void bloquear(int id) {
         Empresa emp = empresaDAO.buscarPorId(id);
         if (emp != null) {
-            emp.setStatus("bloqueada");
+            emp.setStatus("bloqueado");
             empresaDAO.atualizar(emp);
         }
     }
