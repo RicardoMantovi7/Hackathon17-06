@@ -7,19 +7,23 @@ public class Vaga {
     private int empresaId;
     private String titulo;
     private String descricao;
+    private String requisitos;
+    private double valorBolsa;
     private String status;
-    private Date dataCriacao;
+    private Date createdAt;
     private int numeroCandidatos;
     private String nomeEmpresa;
 
     public Vaga() {}
 
-    public Vaga(int empresaId, String titulo, String descricao, String status, Date dataCriacao) {
+    public Vaga(int empresaId, String titulo, String descricao, String requisitos, double valorBolsa, String status, Date createdAt) {
         this.empresaId = empresaId;
         this.titulo = titulo;
         this.descricao = descricao;
+        this.requisitos = requisitos;
+        this.valorBolsa = valorBolsa;
         this.status = status;
-        this.dataCriacao = dataCriacao;
+        this.createdAt = createdAt;
     }
 
     public int getId() {
@@ -54,6 +58,22 @@ public class Vaga {
         this.descricao = descricao;
     }
 
+    public String getRequisitos() {
+        return requisitos;
+    }
+
+    public void setRequisitos(String requisitos) {
+        this.requisitos = requisitos;
+    }
+
+    public double getValorBolsa() {
+        return valorBolsa;
+    }
+
+    public void setValorBolsa(double valorBolsa) {
+        this.valorBolsa = valorBolsa;
+    }
+
     public String getStatus() {
         return status;
     }
@@ -62,12 +82,12 @@ public class Vaga {
         this.status = status;
     }
 
-    public Date getDataCriacao() {
-        return dataCriacao;
+    public Date getCreatedAt() {
+        return createdAt;
     }
 
-    public void setDataCriacao(Date dataCriacao) {
-        this.dataCriacao = dataCriacao;
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 
     public int getNumeroCandidatos() {

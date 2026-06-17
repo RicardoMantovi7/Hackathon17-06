@@ -84,7 +84,7 @@ public class GestaoAlunosDialog extends JDialog {
                     aluno.getRa(),
                     aluno.getNome(),
                     aluno.getEmail(),
-                    aluno.isApto() ? "SIM" : "NÃO"
+                    aluno.isStatusAptidao() ? "SIM" : "NÃO"
             });
         }
     }

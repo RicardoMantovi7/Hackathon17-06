@@ -1,27 +1,26 @@
 import "reflect-metadata";
 import "dotenv/config";
 import cors from "cors";
-import auth from "./routes/auth";
-import vagas from "./routes/vagas";
-import candidaturas from "./routes/candidaturas";
-import notificacoes from "./routes/notificacoes";
 
 import express, { NextFunction, Request, Response } from "express";
-import { AppDataSource } from "./database/data-source";
+import { databaseConnectionReady } from "./database/databaseConnectionReady";
 import { ZodError } from "zod";
 import AppError from "./utils/AppError";
+import routes from "./routes";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// IMPORTANTE: CORS permite requisições de origens diferentes (como o PHP)
+// - Em produção, você deve especificar a origem exata (ex: 'http://localhost')
 app.use(cors());
 
+// IMPORTANTE: Parseia o corpo das requisições como JSON
+// - Sem isso, você não consegue acessar req.body
 app.use(express.json());
 
-app.use("/auth", auth);
-app.use("/vagas", vagas);
-app.use("/candidaturas", candidaturas);
-app.use("/notificacoes", notificacoes);
+// IMPORTANTE: As rotas públicas devem vir ANTES do middleware de autenticação
+app.use(routes);
 
 const handleErrorMiddleware = (
   error: Error,
@@ -53,13 +52,15 @@ const handleErrorMiddleware = (
 
 app.use(handleErrorMiddleware);
 
-app.listen(Number(PORT), () => {
-  console.log('Iniciou o servidor na porta:' + PORT);
-});
-
-AppDataSource.initialize()
+// IMPORTANTE: Inicializa a conexão com o banco ANTES de iniciar o servidor.
+// - `databaseConnectionReady` centraliza essa etapa em um único arquivo.
+databaseConnectionReady
   .then(() => {
-    console.log('Conectou no Banco de Dados');
+    console.log("Conectou no Banco de Dados");
+
+    app.listen(Number(PORT), () => {
+      console.log("Iniciou o servidor na porta:" + PORT);
+    });
   })
   .catch((err) => {
     console.log("Erro ao conectar no banco de dados");

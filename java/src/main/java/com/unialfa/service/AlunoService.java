@@ -49,7 +49,7 @@ public class AlunoService {
                     aluno.setRa(dados[0].trim());
                     aluno.setNome(dados[1].trim());
                     aluno.setEmail(dados[2].trim());
-                    aluno.setApto(true);
+                    aluno.setStatusAptidao(true);
                     alunoDAO.inserir(aluno);
                 }
             }

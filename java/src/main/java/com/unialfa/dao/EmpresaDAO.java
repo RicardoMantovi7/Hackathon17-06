@@ -11,13 +11,15 @@ public class EmpresaDAO implements GenericDAO<Empresa> {
 
     @Override
     public void inserir(Empresa empresa) {
-        String sql = "INSERT INTO empresas (nome, cnpj, email, status) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO empresas (nome, cnpj, email, senha, cidade, status) VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection conn = DatabaseUtil.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, empresa.getNome());
             stmt.setString(2, empresa.getCnpj());
             stmt.setString(3, empresa.getEmail());
-            stmt.setString(4, empresa.getStatus());
+            stmt.setString(4, empresa.getSenha());
+            stmt.setString(5, empresa.getCidade());
+            stmt.setString(6, empresa.getStatus());
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -26,14 +28,16 @@ public class EmpresaDAO implements GenericDAO<Empresa> {
 
     @Override
     public void atualizar(Empresa empresa) {
-        String sql = "UPDATE empresas SET nome=?, cnpj=?, email=?, status=? WHERE id=?";
+        String sql = "UPDATE empresas SET nome=?, cnpj=?, email=?, senha=?, cidade=?, status=? WHERE id=?";
         try (Connection conn = DatabaseUtil.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, empresa.getNome());
             stmt.setString(2, empresa.getCnpj());
             stmt.setString(3, empresa.getEmail());
-            stmt.setString(4, empresa.getStatus());
-            stmt.setInt(5, empresa.getId());
+            stmt.setString(4, empresa.getSenha());
+            stmt.setString(5, empresa.getCidade());
+            stmt.setString(6, empresa.getStatus());
+            stmt.setInt(7, empresa.getId());
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -65,6 +69,8 @@ public class EmpresaDAO implements GenericDAO<Empresa> {
                 emp.setNome(rs.getString("nome"));
                 emp.setCnpj(rs.getString("cnpj"));
                 emp.setEmail(rs.getString("email"));
+                emp.setSenha(rs.getString("senha"));
+                emp.setCidade(rs.getString("cidade"));
                 emp.setStatus(rs.getString("status"));
                 return emp;
             }
@@ -87,6 +93,8 @@ public class EmpresaDAO implements GenericDAO<Empresa> {
                 emp.setNome(rs.getString("nome"));
                 emp.setCnpj(rs.getString("cnpj"));
                 emp.setEmail(rs.getString("email"));
+                emp.setSenha(rs.getString("senha"));
+                emp.setCidade(rs.getString("cidade"));
                 emp.setStatus(rs.getString("status"));
                 lista.add(emp);
             }
@@ -109,6 +117,8 @@ public class EmpresaDAO implements GenericDAO<Empresa> {
                 emp.setNome(rs.getString("nome"));
                 emp.setCnpj(rs.getString("cnpj"));
                 emp.setEmail(rs.getString("email"));
+                emp.setSenha(rs.getString("senha"));
+                emp.setCidade(rs.getString("cidade"));
                 emp.setStatus(rs.getString("status"));
                 lista.add(emp);
             }

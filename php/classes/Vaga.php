@@ -39,8 +39,12 @@ class Vaga {
     public function getEmpresaId():   int    { return $this->empresaId; }
     public function getEmpresaNome(): string { return $this->empresaNome; }
 
-    public function getBolsaFormatada(): string {
-        return 'R$ ' . number_format($this->valorBolsa, 2, ',', '.');
+    public function getBolsaFormatada(bool $comSimbolo = true): string {
+        if ($this->valorBolsa <= 0) {
+            return '';
+        }
+        $valor = number_format($this->valorBolsa, 2, ',', '.');
+        return $comSimbolo ? 'R$ ' . $valor : $valor;
     }
 
     public function isAberta(): bool { return $this->status === 'aberta'; }

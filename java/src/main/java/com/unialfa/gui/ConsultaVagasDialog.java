@@ -74,7 +74,7 @@ public class ConsultaVagasDialog extends JDialog {
                     vaga.getNomeEmpresa(),
                     vaga.getStatus(),
                     vaga.getNumeroCandidatos(),
-                    sdf.format(vaga.getDataCriacao())
+                    sdf.format(vaga.getCreatedAt())
             });
         }
     }
