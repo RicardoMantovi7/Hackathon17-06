@@ -23,6 +23,7 @@ Desenvolvimento
 * Node.js
 * PHP
 * TypeScript
+* JavaScript
 
 Design e Prototipação
 
